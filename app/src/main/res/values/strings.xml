@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">O-DOT</string>
+    <string name="onboarding_title0">Task Tracking Simplified</string>
+    <string name="onboarding_title1">Time-Wise Task Mastery</string>
+    <string name="onboarding_title2">Task Breakdown</string>
+    <string name="onboarding_body0">Effortlessly manage tasks with streamlined organization and intuitive features.</string>
+    <string name="onboarding_body1">Take control of your schedule. Set task dates, meet deadlines effortlessly. Experience the power of time-bound achievement.</string>
+    <string name="onboarding_body2">Tackle big challenges. Break down complex tasks into manageable steps.</string>
+
 </resources>
