@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
+import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.White
 import codsoft.dagno1.o_dot.ui.theme.Jasper
 
@@ -41,14 +42,14 @@ fun MainLayout(navController: NavController) {
                                 modifier = Modifier.size(100.dp),
                                 painter = painterResource(getIconForScreen(screen = screen)),
                                 contentDescription = null,
-                                tint = Jasper,
+                                tint = if (screen == selectedScreen) Jasper else BlueNcs,
                             )
                         },
                         selected = screen == selectedScreen,
                         onClick = {
                             selectedScreen = screen
                             if (selectedScreen == "Add") {
-                                navController.navigate(Screen.Add.route + "/-1")
+                                navController.navigate(Screen.AddEdit.route + "/-1")
                             }
                         },
                         modifier = Modifier

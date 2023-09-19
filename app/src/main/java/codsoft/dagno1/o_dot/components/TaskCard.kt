@@ -55,7 +55,7 @@ fun TaskCard(
             .background(BlueNcs1)
             .padding(10.dp)
             .clickable {
-                navController.navigate(Screen.Add.route + "/${task.id}")
+                navController.navigate(Screen.AddEdit.route + "/${task.id}")
             }
     ){
         IconButton(

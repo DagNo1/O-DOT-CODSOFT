@@ -53,7 +53,7 @@ import java.util.Date
 
 @SuppressLint("SimpleDateFormat", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Add(navController: NavController, id: Int?) {
+fun AddEdit(navController: NavController, id: Int?) {
 
     val context = LocalContext.current
     val dbHelper = DBHelper(context, null)

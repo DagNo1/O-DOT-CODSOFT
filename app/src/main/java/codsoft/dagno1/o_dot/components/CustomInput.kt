@@ -1,12 +1,14 @@
 package codsoft.dagno1.o_dot.components
 
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
 import codsoft.dagno1.o_dot.ui.theme.AliceBlue
-import codsoft.dagno1.o_dot.ui.theme.Gray
 import codsoft.dagno1.o_dot.ui.theme.Coral
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -16,7 +18,7 @@ fun CustomInput(
     onValueChange: (String) -> Unit,
     label: String,
     leadingIcon: ImageVector,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     OutlinedTextField(
@@ -31,7 +33,10 @@ fun CustomInput(
             tint = Coral
         ) },
         colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = AliceBlue),
-        modifier = modifier
+        modifier = modifier,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done // Use Done or Next as needed
+        ),
     )
 
 }

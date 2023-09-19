@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import codsoft.dagno1.o_dot.screens.Add
+import codsoft.dagno1.o_dot.screens.AddEdit
 import codsoft.dagno1.o_dot.screens.MainLayout
 import codsoft.dagno1.o_dot.screens.Onboarding
 import codsoft.dagno1.o_dot.screens.Screen
@@ -27,9 +27,9 @@ fun Navigation() {
         composable(Screen.MainLayout.route) {
             MainLayout(navController = navController)
         }
-        composable(Screen.Add.route + "/{id}") { navBackStack ->
+        composable(Screen.AddEdit.route + "/{id}") { navBackStack ->
             val counter = navBackStack.arguments?.getString("id")
-            Add(navController = navController, id = counter?.toInt())
+            AddEdit(navController = navController, id = counter?.toInt())
         }
     }
 }

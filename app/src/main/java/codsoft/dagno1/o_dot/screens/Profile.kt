@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
 import codsoft.dagno1.o_dot.components.TaskCard
+import codsoft.dagno1.o_dot.data.PreferenceManager
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.interFamily
 import codsoft.dagno1.quotelytics.data.DBHelper
@@ -32,6 +34,8 @@ fun Profile(navController: NavController) {
     val dbHelper = DBHelper(context, null)
 
     val finishedTasks = dbHelper.getAllFinishedTasks()
+    val preferenceManager = PreferenceManager(navController.context)
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -63,14 +67,16 @@ fun Profile(navController: NavController) {
             modifier = Modifier.padding(horizontal = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Username",
-                color = BlueNcs,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = interFamily,
-                modifier = Modifier.padding(start = 10.dp)
-            )
+            preferenceManager.getUsername()?.let {
+                Text(
+                    text = "$it's",
+                    color = BlueNcs,
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = interFamily,
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+            }
             Text(
                 text = "Finished tasks",
                 color = BlueNcs,
