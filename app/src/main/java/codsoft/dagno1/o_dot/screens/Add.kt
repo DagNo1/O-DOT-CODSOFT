@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,36 +41,42 @@ import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
 import codsoft.dagno1.o_dot.components.CustomInput
 import codsoft.dagno1.o_dot.data.Task
-import codsoft.dagno1.o_dot.ui.theme.Gray
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs1
+import codsoft.dagno1.o_dot.ui.theme.Gray
 import codsoft.dagno1.o_dot.ui.theme.Jasper
 import codsoft.dagno1.o_dot.ui.theme.interFamily
 import codsoft.dagno1.quotelytics.data.DBHelper
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
 @SuppressLint("SimpleDateFormat", "UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Add(navController: NavController) {
-    var taskName by remember { mutableStateOf("") }
-    var taskDescription by remember { mutableStateOf("") }
-    val mContext = LocalContext.current
+fun Add(navController: NavController, id: Int?) {
 
+    val context = LocalContext.current
+    val dbHelper = DBHelper(context, null)
+    var task: Task? = null
+    if (id != null && id != -1)
+        task = dbHelper.getTaskById(id)
+
+
+    var taskName by remember { mutableStateOf(task?.title ?: "") }
+    var taskDescription by remember { mutableStateOf(task?.description ?: "") }
+
+    //date input
+    val mContext = LocalContext.current
     val mYear: Int
     val mMonth: Int
     val mDay: Int
-
     val mCalendar = Calendar.getInstance()
-
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-
     mCalendar.time = Date()
 
-    val mDate = remember { mutableStateOf("") }
+    val mDate = remember { mutableStateOf(task?.dudDate?.let { Task.timestampToDate(it) } ?: "") }
 
     val mDatePickerDialog = DatePickerDialog(
         mContext,
@@ -76,11 +85,14 @@ fun Add(navController: NavController) {
         }, mYear, mMonth, mDay
     )
 
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    val context = LocalContext.current
-    val dbHelper = DBHelper(context, null)
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -106,7 +118,7 @@ fun Add(navController: NavController) {
                         )
                     }
                     Text(
-                        text = "New Task",
+                        text = if (task != null) "Edit Task" else "New Task",
                         color = Gray,
                         fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
@@ -150,13 +162,22 @@ fun Add(navController: NavController) {
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
                             fontFamily = interFamily,
-                            modifier = Modifier.padding(top = 10.dp).weight(0.4f)
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .weight(0.4f)
                         )
-                        Spacer(modifier = Modifier.width(100.dp).weight(0.1f))
+                        Spacer(
+                            modifier = Modifier
+                                .width(100.dp)
+                                .weight(0.1f)
+                        )
                         IconButton(
                             onClick = {
                                 mDatePickerDialog.show()
-                            }, modifier = Modifier.width(50.dp).height(50.dp).weight(0.1f)
+                            }, modifier = Modifier
+                                .width(50.dp)
+                                .height(50.dp)
+                                .weight(0.1f)
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.calander),
@@ -173,15 +194,36 @@ fun Add(navController: NavController) {
         floatingActionButton = {
             IconButton(
                 onClick = {
-                    dbHelper.addTask(
-                        Task(
-                            id= -1,
-                            title = taskName,
-                            description = taskDescription,
-                            dudDate = mDate.value,
-                            isChecked = false
-                        )
-                    )
+                    if (taskName.isNotEmpty() && mDate.value.isNotEmpty()) {
+                        if (task == null) {
+                            dbHelper.addTask(
+                                Task(
+                                    id = -1,
+                                    title = taskName,
+                                    description = taskDescription,
+                                    dudDate = Task.dateToTimestamp(mDate.value),
+                                    isFinished = false,
+                                    finishedDate = null
+                                )
+                            )
+                        } else {
+                            task.title = taskName
+                            task.description = taskName
+                            task.dudDate = Task.dateToTimestamp(mDate.value)
+                            dbHelper.updateTask(task)
+                        }
+                        navController.popBackStack()
+                    } else {
+                        scope.launch {
+                            snackbarHostState
+                                .showSnackbar(
+                                    message = "Task Name and Due date are required",
+                                    actionLabel = "Ok",
+                                    duration = SnackbarDuration.Indefinite
+                                )
+                        }
+                    }
+
                 }, modifier = Modifier.size(100.dp)
             ) {
                 Icon(

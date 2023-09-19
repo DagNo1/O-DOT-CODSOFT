@@ -8,10 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import codsoft.dagno1.o_dot.ui.theme.ODOTTheme
+import codsoft.dagno1.quotelytics.data.DBHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DBHelper(this, null)
         setContent {
             ODOTTheme {
                 // A surface container using the 'background' color from the theme

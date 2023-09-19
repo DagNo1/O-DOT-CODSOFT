@@ -48,7 +48,7 @@ fun MainLayout(navController: NavController) {
                         onClick = {
                             selectedScreen = screen
                             if (selectedScreen == "Add") {
-                                navController.navigate(Screen.Add.route)
+                                navController.navigate(Screen.Add.route + "/-1")
                             }
                         },
                         modifier = Modifier
@@ -64,10 +64,10 @@ fun MainLayout(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val content = when (selectedScreen) {
-                    "Home" -> Read()
-                    "User" -> Profile()
-                    else -> Read() // Default screen
+                when (selectedScreen) {
+                    "Home" -> Read(navController = navController)
+                    "User" -> Profile(navController = navController)
+                    else -> Read(navController = navController) // Default screen
                 }
             }
 

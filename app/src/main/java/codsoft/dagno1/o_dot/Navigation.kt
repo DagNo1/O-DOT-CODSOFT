@@ -5,7 +5,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import codsoft.dagno1.o_dot.screens.Add
-import codsoft.dagno1.o_dot.screens.Edit
 import codsoft.dagno1.o_dot.screens.MainLayout
 import codsoft.dagno1.o_dot.screens.Onboarding
 import codsoft.dagno1.o_dot.screens.Screen
@@ -15,7 +14,7 @@ import codsoft.dagno1.o_dot.screens.SplashScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Edit.route) {
+    NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
         }
@@ -28,12 +27,9 @@ fun Navigation() {
         composable(Screen.MainLayout.route) {
             MainLayout(navController = navController)
         }
-        composable(Screen.Add.route) {
-            Add(navController = navController)
-        }
-        composable(Screen.Edit.route + "/{id}") { navBackStack ->
+        composable(Screen.Add.route + "/{id}") { navBackStack ->
             val counter = navBackStack.arguments?.getString("id")
-            Edit(navController = navController, id = counter)
+            Add(navController = navController, id = counter?.toInt())
         }
     }
 }

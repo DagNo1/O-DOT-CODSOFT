@@ -9,21 +9,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
-import codsoft.dagno1.o_dot.components.TaskItem
+import codsoft.dagno1.o_dot.components.TaskCard
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.interFamily
+import codsoft.dagno1.quotelytics.data.DBHelper
 
 @Composable
-fun Profile() {
+fun Profile(navController: NavController) {
+    val context = LocalContext.current
+    val dbHelper = DBHelper(context, null)
+
+    val finishedTasks = dbHelper.getAllFinishedTasks()
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -71,24 +79,13 @@ fun Profile() {
                 fontFamily = interFamily,
                 modifier = Modifier.padding(start = 10.dp)
             )
-            TaskItem(
-                done = true,
-                title = "Do Laundry",
-                dueDate = "09/18/2002",
-                description = "Just pick it up and do it"
-            )
-            TaskItem(
-                done = true,
-                title = "Do Laundry",
-                dueDate = "09/18/2002",
-                description = "Just pick it up and do it"
-            )
-            TaskItem(
-                done = true,
-                title = "Do Laundry",
-                dueDate = "09/18/2002",
-                description = "Just pick it up and do it"
-            )
+            LazyColumn(
+                modifier = Modifier.padding(bottom = 50.dp)
+            ) {
+                items(finishedTasks.size) { i ->
+                    TaskCard(finishedTasks[i], navController = navController)
+                }
+            }
         }
     }
 }
