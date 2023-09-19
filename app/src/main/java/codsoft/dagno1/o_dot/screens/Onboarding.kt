@@ -20,14 +20,11 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -37,10 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
-import codsoft.dagno1.o_dot.ui.theme.AliceBlue
-import codsoft.dagno1.o_dot.ui.theme.Black
+import codsoft.dagno1.o_dot.ui.theme.Gray
+import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.Coral
-import codsoft.dagno1.o_dot.ui.theme.Jasper
 import codsoft.dagno1.o_dot.ui.theme.interFamily
 import codsoft.dagno1.o_dot.ui.theme.MainGradient
 import codsoft.dagno1.o_dot.ui.theme.TransparentGradient
@@ -111,7 +107,7 @@ fun Onboarding(navController: NavController) {
                         fontFamily = interFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
-                        color = AliceBlue
+                        color = BlueNcs
                     ),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -126,7 +122,7 @@ fun Onboarding(navController: NavController) {
                         fontFamily = interFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = 15.sp,
-                        color = AliceBlue
+                        color = BlueNcs
                     ),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -181,7 +177,7 @@ fun Onboarding(navController: NavController) {
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = AliceBlue
+                    color = Gray
                 ),
                 textAlign = TextAlign.Center,
             )

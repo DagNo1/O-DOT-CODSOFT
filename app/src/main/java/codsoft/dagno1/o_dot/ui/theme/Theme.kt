@@ -1,25 +1,14 @@
 package codsoft.dagno1.o_dot.ui.theme
 
-import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 
 private val colorScheme = lightColorScheme(
     primary = Coral,
-    secondary = AliceBlue,
+    secondary = Gray,
     tertiary = Jasper,
-    background = Black
+    background = White
 
     /* Other default colors to override
     surface = Color(0xFFFFFBFE),

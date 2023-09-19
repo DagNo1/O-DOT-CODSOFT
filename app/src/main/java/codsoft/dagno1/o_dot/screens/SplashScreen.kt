@@ -1,5 +1,6 @@
 package codsoft.dagno1.o_dot.screens
 
+import android.content.Context
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -39,7 +40,14 @@ fun SplashScreen(navController: NavController) {
             )
         )
         delay(3000L)
-        navController.navigate(Screen.Onboarding.route)
+//        val sharedPreferences = navController.context. getSharedPreference("my_prefs", Context.MODE_PRIVATE)
+//        val userName = sharedPreferences.getString("username", null)
+//        if(userName == null){
+//            navController.navigate(Screen.Onboarding.route)
+//        } else {
+//            navController.navigate(Screen.MainLayout.route)
+//        }
+
     }
     Box(
         modifier = Modifier.fillMaxSize(),
