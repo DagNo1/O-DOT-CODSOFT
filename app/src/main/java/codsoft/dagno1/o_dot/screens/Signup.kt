@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
 import codsoft.dagno1.o_dot.components.CustomInput
-import codsoft.dagno1.o_dot.ui.theme.Gray
+import codsoft.dagno1.o_dot.data.PreferenceManager
+import codsoft.dagno1.o_dot.ui.theme.AliceBlue
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.MainGradient
 import codsoft.dagno1.o_dot.ui.theme.interFamily
@@ -42,7 +43,9 @@ import codsoft.dagno1.o_dot.ui.theme.interFamily
 @Composable
 fun Signup(navController: NavController) {
     var username by remember { mutableStateOf("") }
-
+    val preferenceManager = remember {
+        PreferenceManager(navController.context)
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -99,8 +102,8 @@ fun Signup(navController: NavController) {
                 .clip(RoundedCornerShape(10.dp))
                 .background(brush = MainGradient)
                 .clickable {
-                    // save user
-                    navController.navigate(Screen.Onboarding.route)
+                    preferenceManager.createUser(username)
+                    navController.navigate(Screen.MainLayout.route)
                 }
                 .padding(vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +115,7 @@ fun Signup(navController: NavController) {
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = Gray
+                    color = AliceBlue
                 ),
                 textAlign = TextAlign.Center,
             )

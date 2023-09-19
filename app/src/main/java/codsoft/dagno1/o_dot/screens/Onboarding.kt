@@ -34,12 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import codsoft.dagno1.o_dot.R
-import codsoft.dagno1.o_dot.ui.theme.Gray
+import codsoft.dagno1.o_dot.ui.theme.AliceBlue
 import codsoft.dagno1.o_dot.ui.theme.BlueNcs
 import codsoft.dagno1.o_dot.ui.theme.Coral
-import codsoft.dagno1.o_dot.ui.theme.interFamily
 import codsoft.dagno1.o_dot.ui.theme.MainGradient
 import codsoft.dagno1.o_dot.ui.theme.TransparentGradient
+import codsoft.dagno1.o_dot.ui.theme.interFamily
 import codsoft.dagno1.quotelytics.data.OnboardingItem
 import kotlinx.coroutines.launch
 
@@ -79,7 +79,7 @@ fun Onboarding(navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Spacer(modifier = Modifier.weight(0.1f))
         HorizontalPager(
             state = pagerState,
@@ -88,7 +88,7 @@ fun Onboarding(navController: NavController) {
                 .padding(horizontal = 16.dp),
         ) { page ->
             // Our page content
-            Column{
+            Column {
                 // Display the image
                 Image(
                     painter = painterResource(id = onboardingItems[page].imageResId),
@@ -177,7 +177,7 @@ fun Onboarding(navController: NavController) {
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = Gray
+                    color = AliceBlue
                 ),
                 textAlign = TextAlign.Center,
             )
@@ -185,5 +185,5 @@ fun Onboarding(navController: NavController) {
         Spacer(modifier = Modifier.weight(0.1f))
 
     }
-   
+
 }
